@@ -45,3 +45,30 @@ $(document).on("click", "p", function() {
     }
   });
 });
+
+//When you click the save note button
+$(document).on("click", "#savenote", function() {
+  //Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("data-id");
+
+  //Run a POST request to change the note, using what's entered in the input fields
+  $.ajax({
+    method: "POST",
+    url: `"/articles/" ${thisId}`,
+    data: {
+      //Value taken from title input
+      title: $("#titleinput").val(),
+      //Value taken from note textarea
+      body: $("#bodyinput").val()
+    }
+  })
+  .then(function(data) {
+    //log the response
+    console.log("data from post request", data);
+    //Empty notes section
+    $("notes").empty();
+  });
+  //Also remove the values entered in the input and textarea for note entry
+  $("#titleinput").val();
+  $("bodyinput").val();
+});
