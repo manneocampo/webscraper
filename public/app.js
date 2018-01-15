@@ -1,13 +1,9 @@
 //grab the articles as a json
 $.getJSON("/articles", function(data) {
   //For each one
-  // for (var i = 0, i < data.length; i++) {
-  //   //display the information from scraped articles on page
-  //   $("#articles").append(`<p data-id= ${data[i]._id}> ${data[i].title} <br>/> ${data[i].link} </p>`);
-  // } Not working and throwing error in dev tools console line 4
   for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+  //   //display the information from scraped articles on page
+    $("#articles").append(`<p data-id='${data[i]._id}'> ${data[i].title} <br>/> ${data[i].link} </p>`);
   }
 });
 
@@ -50,16 +46,17 @@ $(document).on("click", "p", function() {
 $(document).on("click", "#savenote", function() {
   //Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-
+  console.log('this id... ', thisId);
   //Run a POST request to change the note, using what's entered in the input fields
   $.ajax({
     method: "POST",
-    url: `"/articles/" ${thisId}`,
+    url: `/articles/${thisId}`,
     data: {
       //Value taken from title input
       title: $("#titleinput").val(),
       //Value taken from note textarea
-      body: $("#bodyinput").val()
+      body: $("#bodyinput").val(),
+      
     }
   })
   .then(function(data) {
