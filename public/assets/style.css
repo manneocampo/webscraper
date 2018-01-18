@@ -1,0 +1,52 @@
+* {
+  font-family: Arial;
+}
+#main-content {
+  display: flex;
+}
+
+h1, h2 {
+  color: darkblue;
+}
+
+#wrapper > h1 {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Shrikhand', cursive;
+}
+
+#wrapper > h2 {
+  font-family: 'Courgette', cursive;
+}
+
+#articles p {
+  padding: 20px;
+  border: 4px solid darkblue;
+  margin-right: 10px;
+  background-color: cornflowerblue;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+#notes {
+  padding: 20px;
+  border: 4px solid darkblue;
+  background-color: cornflowerblue;
+  border-radius: 14px;
+}
+
+.btn {
+  border: 4px solid darkblue;
+  color: darkblue;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+#scrape-button:hover {
+  background-color: cornflowerblue;
+}

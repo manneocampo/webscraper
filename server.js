@@ -31,9 +31,9 @@ mongoose.connect("mongodb://localhost/webscraper", {
 
 //A GET route for scraping the website
 app.get("/scrape", function(req, res) {
-  axios.get("https://pharmacy.unc.edu/research/centers/cpit/cpit-news/").then(function(response) {
-
-    var $ = cheerio.load(response.data);
+  request.get("https://pharmacy.unc.edu/research/centers/cpit/cpit-news/", function(err, response) {
+    console.log('request: ', response);
+    var $ = cheerio.load(response.body);
     $("div.iso-post").each(function(i, element) {
       var result = {};
       // console.log('!@#!@#: ', $(this).children("a"))

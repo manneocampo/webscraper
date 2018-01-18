@@ -3,15 +3,22 @@ $.getJSON("/articles", function(data) {
   //For each one
   for (var i = 0; i < data.length; i++) {
   //   //display the information from scraped articles on page
-    $("#articles").append(`<p data-id='${data[i]._id}'> ${data[i].title} <br>/> ${data[i].link} </p>`);
+    $("#articles").append(`<p data-id='${data[i]._id}'> ${data[i].title} <br /> ${data[i].link} </p>`);
   }
+});
+
+$('#scrape-button').click(function() {
+  $.get('/scrape')
+  .then(function(data) {
+    console.log('data: ', data);
+  });
 });
 
 //whenever someone clicks a p tag
 
 $(document).on("click", "p", function() {
   //empty the notes from the note section
-  $("#notes").empty();
+  $("#notes-container").empty();
   //save the id from the p tag
   var thisId = $(this).attr("data-id");
 
@@ -23,15 +30,16 @@ $(document).on("click", "p", function() {
   //Next, add the note info to the page
   .then(function(data) {
     console.log("data", data);
+    var notes = $('<div id="notes">');
     //The title of the article
-    $("#notes").append(`<h2> ${data.title} </h2>`);
+    notes.append(`<h2> ${data.title} </h2>`);
     //An input to enter a new title
-    $("#notes").append(`<input id="titleinput" name="title">`);
+    notes.append(`<input id="titleinput" name="title">`);
     //A textarea to add a new note body
-    $("#notes").append(`<textarea id="bodyinput" name="body"></textarea>`);
+    notes.append(`<textarea id="bodyinput" name="body"></textarea>`);
     //A button to submit a new note, with the id of the article saved to it
-    $("#notes").append(`<button data-id=${data._id} id="savenote"> Save Note</button>`);
-
+    notes.append(`<button class='btn' data-id=${data._id} id="savenote"> Save Note</button>`);
+    $('#notes-container').append(notes);
     //If there's a note in the article
     if(data.note) {
       //Place the title of the note in the title input
@@ -56,14 +64,14 @@ $(document).on("click", "#savenote", function() {
       title: $("#titleinput").val(),
       //Value taken from note textarea
       body: $("#bodyinput").val(),
-      
+
     }
   })
   .then(function(data) {
     //log the response
     console.log("data from post request", data);
     //Empty notes section
-    $("notes").empty();
+    $("notes-container").empty();
   });
   //Also remove the values entered in the input and textarea for note entry
   $("#titleinput").val();

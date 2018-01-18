@@ -3,13 +3,14 @@
   <head>
     <meta charset= "UTF-8">
     <title>Scraping with Mongoose</title>
+    <link rel='stylesheet' href='assets/style.css' />
+    <link href="https://fonts.googleapis.com/css?family=Courgette|Shrikhand" rel="stylesheet">
+
     <style>
-    * {
-      border: 1px solid black
-    }
-    body { background-color: #F2F6D0 }
+
+    body { background-color: lightblue }
     #wrapper {
-      width: 960px;
+      width: 1440px;
       margin-left: auto;
       margin-right: auto;
       padding-top: 5%;
@@ -21,8 +22,9 @@
       width: 60%;
       height: 700px;
     }
-    #notes {
-      float: right;
+    #notes-container {
+      flex-grow: 1;
+      margin: 15px 0 0 15px;
       width: 30%;
     }
     textarea, input {
@@ -36,12 +38,15 @@
     }
     </style>
   </head>
-  <body>
+  <body background= "/assets/images/mooning.png">
     <div id="wrapper">
-      <h1>WebScraper</h1>
+      <h1>UNC School of Pharmacy (CPIT News) WebScraper</h1>
+      <button class='btn'id="scrape-button">Scrape for Articles!</button>
       <h2>Scraped Articles Below</h2>
-      <div id="articles"></div>
-      <div id="notes"></div>
+      <div id='main-content'>
+        <div id="articles"></div>
+        <div id="notes-container"></div>
+      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="app.js"></script>
