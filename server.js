@@ -16,7 +16,7 @@ var app = express();
 app.use(logger("dev"));
 
 //use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //to serve the public folder as a static directory
 app.use(express.static("public"));
@@ -44,18 +44,31 @@ app.get("/scrape", function(req, res) {
       .children()
       .attr("href");
 
-      db.Article
-      .create(result)
-      .then(function(dbArticle) {
-        console.log("db article", dbArticle);
-      })
-      .catch(function(err) {
-        console.log('catch')
-        return res.json(err);
-      });
-    });
+    //If this found element had both a title and a link
+      if (result.title && result.link) {
+        db.Article
+        .find({title: result.title})
+        .then((docs) => {
+          if (docs.length <= 0) {
+            db.Article
+            .create(result)
+            .then(function(dbArticle) {
+              console.log("db article", dbArticle);
+            })
+            .catch(function(err) {
+              console.log('catch')
 
-    res.send("Scrape Complete");
+              return res.json(err);
+              // else {
+              //   return res.json(err);
+              // }
+            });
+          };
+        });
+
+        // res.send("Scrape Complete");
+      };
+    });
   });
 });
 
