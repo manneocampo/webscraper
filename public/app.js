@@ -1,16 +1,11 @@
-//grab the articles as a json
-$.getJSON("/articles", function(data) {
-  //For each one
-  for (var i = 0; i < data.length; i++) {
-  //   //display the information from scraped articles on page
-    $("#articles").append(`<p data-id='${data[i]._id}'> ${data[i].title} <br /> ${data[i].link} </p>`);
-  }
-});
-
 $('#scrape-button').click(function() {
   $.get('/scrape')
   .then(function(data) {
     console.log('data: ', data);
+    for (var i = 0; i < data.length; i++) {
+      //display the information from scraped articles on page
+      $("#articles").append(`<p data-id='${data[i]._id}'> ${data[i].title} <br /> ${data[i].link} </p>`);
+    }
   });
 });
 

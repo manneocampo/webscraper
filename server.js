@@ -32,7 +32,6 @@ mongoose.connect("mongodb://localhost/webscraper", {
 //A GET route for scraping the website
 app.get("/scrape", function(req, res) {
   request.get("https://pharmacy.unc.edu/research/centers/cpit/cpit-news/", function(err, response) {
-    console.log('request: ', response);
     var $ = cheerio.load(response.body);
     $("div.iso-post").each(function(i, element) {
       var result = {};
@@ -54,34 +53,33 @@ app.get("/scrape", function(req, res) {
             .create(result)
             .then(function(dbArticle) {
               console.log("db article", dbArticle);
+              db.Article
+              .find()
+              .then(function(dbArticle) {
+                res.json(dbArticle);
+              })
+              .catch(function(err) {
+                res.json(err);
+              });
             })
             .catch(function(err) {
               console.log('catch')
 
               return res.json(err);
-              // else {
-              //   return res.json(err);
-              // }
             });
-          };
+          } else {
+            db.Article
+            .find()
+            .then(function(dbArticle) {
+              res.json(dbArticle);
+            })
+            .catch(function(err) {
+              res.json(err);
+            });
+          }
         });
-
-        // res.send("Scrape Complete");
       };
     });
-  });
-});
-
-//route to get all Articles from the db
-app.get("/articles", function(req, res) {
-
-  db.Article
-  .find()
-  .then(function(dbArticle) {
-    res.json(dbArticle);
-  })
-  .catch(function(err) {
-    res.json(err);
   });
 });
 
